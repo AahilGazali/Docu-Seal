@@ -1,0 +1,186 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply m-0 min-h-screen antialiased text-slate-950;
+  }
+}
+
+/* Animations */
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  33% { transform: translateY(-20px) translateX(10px); }
+  66% { transform: translateY(10px) translateX(-10px); }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.5s ease-out;
+}
+
+.animate-slide-down {
+  animation: slide-down 0.3s ease-out;
+}
+
+.animate-shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* ========== DocuSeal Theme: Slate + Teal (Clean, Professional) ========== */
+
+/* Auth: Login & Register */
+.auth-bg {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+  position: relative;
+  overflow: hidden;
+}
+.auth-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 20% 30%, rgba(20, 184, 166, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 50% at 80% 70%, rgba(15, 118, 110, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+.auth-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.15);
+}
+.auth-btn-primary {
+  background: linear-gradient(180deg, #0d9488 0%, #0f766e 100%);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(13, 148, 136, 0.35);
+}
+.auth-btn-primary:hover {
+  background: linear-gradient(180deg, #0f766e 0%, #115e59 100%);
+  box-shadow: 0 6px 20px rgba(13, 148, 136, 0.45);
+}
+.auth-link {
+  color: #0d9488;
+  font-weight: 600;
+}
+.auth-link:hover {
+  color: #0f766e;
+  text-decoration: underline;
+}
+
+/* Dashboard main area */
+.dashboard-main-wrap {
+  background: #e2e8f0 !important;
+  min-height: 100vh;
+  position: relative;
+}
+.dashboard-header-card {
+  background: #fff !important;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+}
+.dashboard-card {
+  background: #fff !important;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+  transition: all 0.25s ease;
+}
+.dashboard-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+  transform: translateY(-2px);
+}
+.btn-primary {
+  background: linear-gradient(180deg, #0f766e 0%, #115e59 100%);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(15, 118, 110, 0.5);
+  transition: all 0.25s ease;
+}
+.btn-primary:hover {
+  background: linear-gradient(180deg, #115e59 0%, #134e4a 100%);
+  box-shadow: 0 6px 20px rgba(15, 118, 110, 0.6);
+  transform: translateY(-1px);
+}
+
+/* Navbar */
+.navbar-bar {
+  background: linear-gradient(90deg, #0f172a 0%, #1e293b 100%) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+.navbar-bar .nav-title,
+.navbar-bar .nav-email-pill {
+  color: #f8fafc !important;
+}
+.navbar-bar .nav-email-pill {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+.navbar-bar .logout-btn {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #f8fafc !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+.navbar-bar .logout-btn:hover {
+  background: rgba(220, 38, 38, 0.9) !important;
+  color: #fff !important;
+  border-color: #dc2626 !important;
+}
+
+/* Sidebar */
+.sidebar-wrap {
+  height: 100vh;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #0f172a 0%, #1e293b 50%, #0f172a 100%) !important;
+  box-shadow: 2px 0 20px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+}
+.sidebar-nav {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.sidebar-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1rem 1.25rem;
+  background: rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
+}
+
+/* Focus rings */
+input:focus, button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #0d9488;
+}
