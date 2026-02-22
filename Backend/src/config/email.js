@@ -1,8 +1,10 @@
 const nodemailer = require('nodemailer');
 const { Resend } = require('resend');
 
-const useResend = !!process.env.RESEND_API_KEY;
-const resend = useResend ? new Resend(process.env.RESEND_API_KEY) : null;
+// Prefer Resend over Gmail when RESEND_API_KEY is set (Gmail SMTP fails on Render)
+const resendKey = (process.env.RESEND_API_KEY || '').trim();
+const useResend = resendKey.length > 0 && resendKey.startsWith('re_');
+const resend = useResend ? new Resend(resendKey) : null;
 
 // Nodemailer config - use port 587 (STARTTLS) for better cloud compatibility (Gmail blocks port 465 on some hosts)
 const transporter = nodemailer.createTransport({
@@ -40,8 +42,8 @@ if (useResend) {
 }
 
 async function sendSigningInvitation({ to, name, documentTitle, signingUrl, ownerName }) {
-  if (!process.env.EMAIL_USER && !process.env.RESEND_API_KEY) {
-    throw new Error('Email not configured. Add EMAIL_USER + EMAIL_PASSWORD (Render) or RESEND_API_KEY. Redeploy after adding.');
+  if (!useResend && (!process.env.EMAIL_USER || !process.env.EMAIL_PASSWORD)) {
+    throw new Error('Email not configured. Set RESEND_API_KEY (recommended) or EMAIL_USER + EMAIL_PASSWORD. Redeploy after adding.');
   }
 
   const html = `
