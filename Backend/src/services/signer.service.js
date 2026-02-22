@@ -105,12 +105,12 @@ async function addSigners(documentId, ownerId, signers, requiresOrder = false, e
   }
 
   // Send invitation emails
-  const baseUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+  const baseUrl = (process.env.FRONTEND_URL || 'http://localhost:3000').replace(/\/$/, '');
   const emailResults = [];
 
   for (const signer of insertedSigners) {
+    const signingUrl = `${baseUrl}/sign/${documentId}?token=${signer.signer_token}`;
     try {
-      const signingUrl = `${baseUrl}/sign/${documentId}?token=${signer.signer_token}`;
       await sendSigningInvitation({
         to: signer.email,
         name: signer.name,
@@ -118,17 +118,15 @@ async function addSigners(documentId, ownerId, signers, requiresOrder = false, e
         signingUrl,
         ownerName,
       });
-      
-      // Update status to 'sent'
       await supabase
         .from('document_signers')
         .update({ status: 'sent' })
         .eq('id', signer.id);
-
       emailResults.push({ email: signer.email, sent: true });
     } catch (emailError) {
       console.error(`[AddSigners] Failed to send email to ${signer.email}:`, emailError);
-      emailResults.push({ email: signer.email, sent: false, error: emailError.message });
+      const msg = emailError.message || 'Email send failed';
+      throw new ApiError(500, `Could not send invitation to ${signer.email}: ${msg}. Check Render env: EMAIL_USER+EMAIL_PASSWORD or use RESEND_API_KEY (resend.com).`);
     }
   }
 

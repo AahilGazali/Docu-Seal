@@ -1,6 +1,21 @@
 # Email Setup Guide for DocuSeal
 
-## Using Gmail with Nodemailer
+## Resend (Recommended for Render/Production)
+
+Gmail SMTP often fails on cloud hosts like Render. Use **Resend** instead:
+
+1. Sign up at [resend.com](https://resend.com)
+2. Get your API key from the dashboard
+3. Add to Render Environment Variables:
+   - `RESEND_API_KEY` = `re_xxxxxxxx`
+   - `FRONTEND_URL` = `https://docu-seal.netlify.app`
+4. Redeploy
+
+Emails will send from `onboarding@resend.dev` by default. To use your own domain, add and verify it in Resend, then set `EMAIL_FROM_EMAIL=noreply@yourdomain.com`.
+
+---
+
+## Using Gmail with Nodemailer (Local Dev)
 
 ### Step 1: Enable 2-Step Verification
 1. Go to [Google Account Security](https://myaccount.google.com/security)
