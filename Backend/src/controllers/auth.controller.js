@@ -1,9 +1,10 @@
 const authService = require('../services/auth.service');
 
+// sameSite: 'none' required when frontend (Netlify) and backend (Render) are on different domains
 const REFRESH_COOKIE_OPTIONS = {
   httpOnly: true,
   secure: process.env.NODE_ENV === 'production',
-  sameSite: 'strict',
+  sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
   maxAge: 7 * 24 * 60 * 60 * 1000,
   path: '/api/auth',
 };
